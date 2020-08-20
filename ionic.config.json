@@ -1,0 +1,7 @@
+{
+  "name": "QuickMafs",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
