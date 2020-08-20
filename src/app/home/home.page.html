@@ -10,7 +10,7 @@
             <ion-col>Current Question Time</ion-col>
           </ion-row>
           <ion-row>
-            <ion-col>{{right}}/{{total}}</ion-col>
+            <ion-col>{{ right }}/{{ total }}</ion-col>
             <ion-col>{{ totalTime }}</ion-col>
             <ion-col>{{ currentTime }}</ion-col>
           </ion-row>
@@ -66,7 +66,14 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col (click)="submit()" class="submit">
+          <ion-col (click)="reset()" size="4" class="submit">
+            <ion-card color="danger" class="compact">
+              <ion-card-content>
+                Reset
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col (click)="submit()" size="8" class="submit">
             <ion-card color="success" class="compact">
               <ion-card-content>
                 Submit

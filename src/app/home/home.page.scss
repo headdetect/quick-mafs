@@ -27,18 +27,22 @@ ion-content {
   top: 40px;
 
   .math {
-    padding-top: 30px;
-    font-size: 5rem;
+    padding: 0;
+    font-size: 4rem;
     color: var(--ion-text-color);
     font-weight: 700;
   }
 }
 
+ion-card {
+  margin: 10px;
+}
+
 ion-card.compact {
-  margin: 1px;
+  margin: 0;
 
   & > ion-card-content {
-    padding: 15px;
+    padding: 10px;
     height: 55px;
   }
 }

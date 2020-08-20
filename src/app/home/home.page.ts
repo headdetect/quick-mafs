@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import {AlertController, Platform, ToastController} from '@ionic/angular';
 import * as moment from 'moment';
+import { TapticEngine } from '@ionic-native/taptic-engine/ngx';
 
 @Component({
   selector: 'app-home',
@@ -34,7 +35,7 @@ export class HomePage implements OnInit {
   public startTime = moment();
   public currentStartTime = moment();
 
-  constructor(public toastController: ToastController) {}
+  constructor(public toastController: ToastController, public alertController: AlertController, private taptic: TapticEngine, public platform: Platform) {}
 
   ngOnInit(): void {
     this.generateQuestion();
@@ -76,8 +77,16 @@ export class HomePage implements OnInit {
     if (this.answerShouldBe === +this.answer) {
       result = 'Correct :)';
       this.right++;
+
+      if (this.platform.is('ios')) {
+        await this.taptic.notification({type: 'success'});
+      }
     } else {
       result = 'Nope :(';
+
+      if (this.platform.is('ios')) {
+        await this.taptic.notification({type: 'error'});
+      }
     }
 
     const toast = await this.toastController.create({
@@ -103,5 +112,25 @@ export class HomePage implements OnInit {
     if (this.answer.length > 0) {
       this.answer = this.answer.substring(0, this.answer.length - 1);
     }
+  }
+
+  public async reset() {
+    const alert = await this.alertController.create({
+      message: 'Are you sure you want to reset?',
+      header: 'Reset Stats',
+      buttons: ['Cancel', {
+        text: 'Reset',
+        handler: () => {
+          this.pickNewBackground();
+          this.generateQuestion();
+          this.currentStartTime = moment();
+          this.startTime = moment();
+          this.right = 0;
+          this.total = 0;
+        }
+      }]
+    });
+
+    await alert.present();
   }
 }
