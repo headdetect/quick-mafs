@@ -1,27 +1,36 @@
+ion-content {
+  background: red;
+}
+
 #container {
+  height: 100vh;
+  width: 100vh;
+}
+
+.status {
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.content {
   text-align: center;
 
   position: absolute;
   left: 0;
   right: 0;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-80%);
+
+  .math {
+    padding-top: 30px;
+    font-size: 5rem;
+    color: black;
+    font-weight: 700;
+  }
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+ion-input {
+  font-size: 2rem;
+  color: black;
 }

@@ -1,12 +1,91 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import { ToastController } from '@ionic/angular';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
-  constructor() {}
+  public coolAssColors = [
+    {from: '#8ef378', to: '#1cbbb4'},
+    {from: '#e95f62', to: '#f286a0'},
+    {from: '#dfe4ef', to: '#899cfc'},
+    {from: '#dff7df', to: '#98f286'},
+    {from: '#2aeeff', to: '#5580eb'},
+    {from: '#fdb9be', to: '#e95a7d'},
+    {from: '#ffdbd5', to: '#fe69bd'},
+    {from: '#f1f9d3', to: '#31EEFD'},
+    {from: '#c4eaf3', to: '#85c8de'}
+  ];
 
+  public gradient: string = '';
+
+  public answerShouldBe = 0;
+  public answer: string = '';
+  public question: string = '4 x 6';
+
+  public right = 0;
+  public total = 0;
+  public currentTime = '0:00';
+  public startTime = moment();
+
+  constructor(public toastController: ToastController) {}
+
+  ngOnInit(): void {
+    this.generateQuestion();
+    this.pickNewBackground();
+
+    setInterval(() => {
+      const seconds = moment.duration(moment().diff(this.startTime)).seconds();
+      this.currentTime = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`
+    }, 1000);
+  }
+
+  public generateQuestion() {
+    const a = Math.floor(Math.random() * 100)
+    const b = Math.floor(Math.random() * 100)
+    const sign = Math.random() > 0.5 ? '+' : '-';
+    this.answerShouldBe = sign === '+' ? a + b : a - b;
+
+    this.question = `${a} ${sign} ${b}`;
+  }
+
+  private pickNewBackground() {
+    const set = this.coolAssColors[Math.floor(Math.random() * this.coolAssColors.length)];
+
+    this.gradient = `linear-gradient(30deg, ${set.from}, ${set.to})`
+  }
+
+  public async clickityClackityOnTheKeyboardEventHandler($event) {
+    if ($event.key !== 'Enter')
+      return;
+
+
+    this.total++;
+
+    let result;
+
+    if (this.answerShouldBe == this.answer) {
+      result = 'Correct :)';
+      this.right++;
+    } else {
+      result = 'Nope :(';
+    }
+
+    const toast = await this.toastController.create({
+      message: result,
+      duration: 1000,
+      position: 'top'
+    });
+
+    await toast.present();
+
+    // Clear //
+    this.pickNewBackground();
+    this.generateQuestion();
+    this.answer = '';
+  }
 }
