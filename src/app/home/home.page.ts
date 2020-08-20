@@ -23,7 +23,7 @@ export class HomePage implements OnInit {
 
   public gradient: string = '';
 
-  public answerShouldBe = 0;
+  public answerShouldBe: number = 0;
   public answer: string = '';
   public question: string = '4 x 6';
 
@@ -56,19 +56,20 @@ export class HomePage implements OnInit {
   private pickNewBackground() {
     const set = this.coolAssColors[Math.floor(Math.random() * this.coolAssColors.length)];
 
-    this.gradient = `linear-gradient(30deg, ${set.from}, ${set.to})`
+    this.gradient = `linear-gradient(30deg, ${set.from}, ${set.to})`;
   }
 
   public async clickityClackityOnTheKeyboardEventHandler($event) {
-    if ($event.key !== 'Enter')
+    if ($event.key !== 'Enter') {
       return;
+    }
 
 
     this.total++;
 
     let result;
 
-    if (this.answerShouldBe == this.answer) {
+    if (this.answerShouldBe === +this.answer) {
       result = 'Correct :)';
       this.right++;
     } else {
