@@ -29,8 +29,10 @@ export class HomePage implements OnInit {
 
   public right = 0;
   public total = 0;
+  public totalTime = '0:00';
   public currentTime = '0:00';
   public startTime = moment();
+  public currentStartTime = moment();
 
   constructor(public toastController: ToastController) {}
 
@@ -40,7 +42,14 @@ export class HomePage implements OnInit {
 
     setInterval(() => {
       const seconds = moment.duration(moment().diff(this.startTime)).seconds();
-      this.currentTime = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`
+      const minutes = moment.duration(moment().diff(this.startTime)).minutes();
+      this.totalTime = `${minutes}:${String(seconds).padStart(2, '0')}`
+    }, 1000);
+
+    setInterval(() => {
+      const seconds = moment.duration(moment().diff(this.currentStartTime)).seconds();
+      const minutes = moment.duration(moment().diff(this.currentStartTime)).minutes();
+      this.currentTime = `${minutes}:${String(seconds).padStart(2, '0')}`
     }, 1000);
   }
 
@@ -59,11 +68,7 @@ export class HomePage implements OnInit {
     this.gradient = `linear-gradient(30deg, ${set.from}, ${set.to})`
   }
 
-  public async clickityClackityOnTheKeyboardEventHandler($event) {
-    if ($event.key !== 'Enter')
-      return;
-
-
+  public async submit() {
     this.total++;
 
     let result;
@@ -87,5 +92,16 @@ export class HomePage implements OnInit {
     this.pickNewBackground();
     this.generateQuestion();
     this.answer = '';
+    this.currentStartTime = moment();
+  }
+
+  public press(button) {
+    this.answer += button;
+  }
+
+  public backspace() {
+    if (this.answer.length > 0) {
+      this.answer = this.answer.substring(0, this.answer.length - 1);
+    }
   }
 }

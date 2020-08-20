@@ -11,6 +11,11 @@ ion-content {
   color: white;
   font-size: 2rem;
   font-weight: 700;
+
+  .tiny {
+    font-size: 0.7rem;
+    text-align: center;
+  }
 }
 
 .content {
@@ -19,8 +24,7 @@ ion-content {
   position: absolute;
   left: 0;
   right: 0;
-  top: 50%;
-  transform: translateY(-80%);
+  top: 40px;
 
   .math {
     padding-top: 30px;
@@ -30,7 +34,16 @@ ion-content {
   }
 }
 
-ion-input {
+ion-card.compact {
+  margin: 1px;
+
+  & > ion-card-content {
+    padding: 15px;
+    height: 55px;
+  }
+}
+
+ion-card.answer-card ion-card-content {
   font-size: 2rem;
   color: black;
 }

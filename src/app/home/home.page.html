@@ -3,7 +3,18 @@
     <div class="content">
 
       <div class="status">
-        {{right}}/{{total}} - {{ currentTime }}
+        <ion-grid>
+          <ion-row class="tiny">
+            <ion-col>Correct/Total</ion-col>
+            <ion-col>Total Time</ion-col>
+            <ion-col>Current Question Time</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>{{right}}/{{total}}</ion-col>
+            <ion-col>{{ totalTime }}</ion-col>
+            <ion-col>{{ currentTime }}</ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
 
       <ion-card>
@@ -14,11 +25,56 @@
         </ion-card-content>
       </ion-card>
 
-      <ion-card>
+      <ion-card class="answer-card">
         <ion-card-content>
-          <ion-input [(ngModel)]="answer" type="number" (keypress)="clickityClackityOnTheKeyboardEventHandler($event)" autofocus></ion-input>
+          {{ answer || '&nbsp;' }}
         </ion-card-content>
       </ion-card>
+
+      <ion-grid>
+        <ion-row *ngFor="let i of [0, 1, 2]">
+          <ion-col *ngFor="let r of [1, 2, 3]" (click)="press(((i * 3) + r).toString())">
+            <ion-card class="compact">
+              <ion-card-content>
+                {{((i * 3) + r)}}
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col (click)="press('-')">
+            <ion-card class="compact">
+              <ion-card-content>
+                -
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col (click)="press('0')">
+            <ion-card class="compact">
+            <ion-card-content>
+              0
+            </ion-card-content>
+          </ion-card>
+          </ion-col>
+          <ion-col (click)="backspace()">
+            <ion-card class="compact">
+              <ion-card-content>
+                <ion-icon name="arrow-back-outline"></ion-icon>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col (click)="submit()" class="submit">
+            <ion-card color="success" class="compact">
+              <ion-card-content>
+                Submit
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
 
   </div>
