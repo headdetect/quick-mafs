@@ -5,6 +5,10 @@
 
 /** Ionic CSS Variables **/
 :root {
+  --ion-card-color: black;
+  --ion-text-color: black;
+  --ion-body-color: white;
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
@@ -87,6 +91,9 @@
    */
 
   body {
+    --ion-body-color: black;
+    --ion-card-color: white;
+
     --ion-color-primary: #428cff;
     --ion-color-primary-rgb: 66,140,255;
     --ion-color-primary-contrast: #ffffff;
