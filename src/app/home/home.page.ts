@@ -104,8 +104,11 @@ export class HomePage implements OnInit {
     this.currentStartTime = moment();
   }
 
-  public press(button) {
+  public async press(button) {
     this.answer += button;
+    if (this.platform.is('ios')) {
+      await this.taptic.impact({style: 'light'});
+    }
   }
 
   public backspace() {
